@@ -1,3 +1,9 @@
+
+
+body {
+    margin: 5px;
+}
+
 #heading-title {
     font-size: 45px;
     width: 50%;
@@ -6,3 +12,6 @@
     border-bottom: 2px grey solid;
 }
 
+#current-weather-city {
+    color: blue;
+}
