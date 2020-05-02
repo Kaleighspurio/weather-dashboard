@@ -5,16 +5,38 @@
 
 // ***** When the search button is clicked*****
 $(".search-button").on("click", function(){
-    var cityInput = $("#city-input").val()
+    var cityInput = $("#city-input").val();
+    console.log(cityInput);
     var stateInput = $("#state").val();
     console.log(stateInput);
     console.log(cityInput);
 
+    var cityAndState = `${cityInput}, ${stateInput}`;
+    localStorage.setItem("history", cityAndState);
+    var cityButton = $("<button>", {
+        class: "button is-info is-fullwidth is-light",
+        text: cityAndState
+    });
+    $("#city-buttons").prepend(cityButton);
+
     var apiKey = "9d66412a01adf0dc225bf9f09e3633d2";
-    var currentWeatherUrl = ``;
+    var currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput},${stateInput},us&appid=${apiKey}`;
+    console.log(currentWeatherUrl);
     // When the search button is click, 
 //       -the city and state will be saved into local storage
 //       - an ajax request will run for the current weather (see below)
+    $.get(currentWeatherUrl).then(function(response){
+        console.log(response);
+        var icon = response.weather[0].icon + ".png";
+        var currentTemperature = response.main.temp;
+        var currentHumidity = response.main.humidity;
+        console.log(currentHumidity);
+        $("#current-weather-city").text(response.name);
+        var currentTempEl = $("<p>").text(`Current Tempurature: ${currentTemperature}`);
+        var currentHumidityEl = $("<p>").text(`Humidity: ${currentHumidity}`);
+
+        $("#current-weather").append(currentTempEl, currentHumidityEl);
+    });
 //       -a button will be created with that city and state information and will recall the request for that location
 });
 
