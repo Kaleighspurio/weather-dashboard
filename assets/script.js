@@ -4,10 +4,20 @@
 
 
 // ***** When the search button is clicked*****
-// When the search button is click, 
+$(".search-button").on("click", function(){
+    var cityInput = $("#city-input").val()
+    var stateInput = $("#state").val();
+    console.log(stateInput);
+    console.log(cityInput);
+
+    var apiKey = "9d66412a01adf0dc225bf9f09e3633d2";
+    var currentWeatherUrl = ``;
+    // When the search button is click, 
 //       -the city and state will be saved into local storage
 //       - an ajax request will run for the current weather (see below)
 //       -a button will be created with that city and state information and will recall the request for that location
+});
+
 
 
 // ***** To get the current weather*****
