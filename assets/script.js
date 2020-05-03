@@ -1,19 +1,16 @@
-// There will be two inputs.  One for the city and one for the state
-// The user will type in a city and state and click the search button
-// the text that the user inputs will fill in an ajax query url to get a response with the current weather for that area
+var m = moment().format("MMMM Do, YYYY");
+var condensedM = moment().format("l")
 
 // ***** When the search button is clicked*****
 $(".search-button").on("click", function () {
   var cityInput = $("#city-input").val();
-  console.log(cityInput);
   var stateInput = $("#state").val();
-  console.log(stateInput);
-  console.log(cityInput);
-
   var cityAndState = `${cityInput}, ${stateInput}`;
+//   save the last city and state to local storage
   localStorage.setItem("history", cityAndState);
+//   when the search button is clicked, a new button with the city and state just searched is created and appended below the search button
   var cityButton = $("<button>", {
-    class: "button is-info is-fullwidth is-light",
+    class: "button  is-fullwidth is-light city-button",
     text: cityAndState,
     "data-city": cityInput,
     "data-state": stateInput,
@@ -23,21 +20,21 @@ $(".search-button").on("click", function () {
   var apiKey = "9d66412a01adf0dc225bf9f09e3633d2";
   var currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput},${stateInput},us&appid=${apiKey}`;
   console.log(currentWeatherUrl);
-  // When the search button is click,
-  //       -the city and state will be saved into local storage
-  //       - an ajax request will run for the current weather (see below)
+// ajax request for the current weather with city and state parameters, for searching inside the US
   $.get(currentWeatherUrl).then(function (response) {
-    // empty the #current-weather div if there is already information presented there
+    // This empties the #current-weather div if there is already information presented there
     $("#current-weather").empty();
     console.log(response);
+    // create a variable for the source of the icon image that will be appended
     var icon = response.weather[0].icon + ".png";
     var iconUrl = "http://openweathermap.org/img/w/" + icon;
     // convert the temperature from Kelvin to Fahrenheit
     var currentTemperature = Math.round(response.main.temp * 1.8 - 459.67);
     var currentHumidity = response.main.humidity;
     var currentWind = response.wind.speed;
-    console.log(currentHumidity);
+    // add the current city searched to the current weather span
     $("#current-weather-city").text(response.name);
+    $("#current-date").text("on " + m);
     // create <p> tags for the temp, humidty and windspeed
     var currentIconEl = $("<img>", {
       src: iconUrl,

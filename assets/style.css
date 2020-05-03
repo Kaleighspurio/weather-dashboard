@@ -31,3 +31,7 @@ header {
 .box {
     background-color: #d8e3e3;
 }
+
+.city-button {
+    margin: 2px;
+}
