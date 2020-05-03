@@ -4,6 +4,11 @@ body {
     margin: 5px;
 }
 
+header {
+    background-color: #edf0f0;
+    border-radius: 10px;
+}
+
 #heading-title {
     font-size: 45px;
     width: 50%;
@@ -13,5 +18,16 @@ body {
 }
 
 #current-weather-city {
-    color: blue;
+    color: cornflowerblue;
+}
+
+#current-weather {
+    width:50%;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #edf0f0;
+}
+
+.box {
+    background-color: #d8e3e3;
 }

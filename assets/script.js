@@ -16,7 +16,7 @@ $(".search-button").on("click", function () {
     class: "button is-info is-fullwidth is-light",
     text: cityAndState,
     "data-city": cityInput,
-    "data-state": stateInput
+    "data-state": stateInput,
   });
   $("#city-buttons").prepend(cityButton);
 
@@ -41,9 +41,10 @@ $(".search-button").on("click", function () {
     // create <p> tags for the temp, humidty and windspeed
     var currentIconEl = $("<img>", {
       src: iconUrl,
+      width: "70px",
     });
     var currentTempEl = $("<p>").text(
-      `Current Tempurature: ${currentTemperature} degrees F`
+      `Current Temp: ${currentTemperature} degrees F`
     );
     var currentHumidityEl = $("<p>").text(`Humidity: ${currentHumidity}%`);
     var currentWindspeedEl = $("<p>").text(`Windspeed: ${currentWind} mph`);
@@ -56,14 +57,35 @@ $(".search-button").on("click", function () {
     );
     var longitude = response.coord.lon;
     var lattitude = response.coord.lat;
-    var uvIndexUrl = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lattitude}&lon=${longitude}`
-    $.get(uvIndexUrl).then(function(uvResponse){
-        console.log(uvResponse);
-        var uvIndexEl = $("<p>").text(`UV Index: ${uvResponse.value}`);
-        $("#current-weather").append(uvIndexEl);
+    var uvIndexUrl = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lattitude}&lon=${longitude}`;
+    $.get(uvIndexUrl).then(function (uvResponse) {
+      console.log(uvResponse);
+      var uvIndexEl = $("<p>", {
+        class: "uv-index",
+      }).text(`UV Index: ${uvResponse.value}`);
+      //   if the uv-index falls within certain ranges, the background of the uvUndexEl will change to indicate the severity of the current index
+      if (uvResponse.value < 3) {
+        uvIndexEl.css("background-color", "green");
+      } else if (
+        uvResponse.value === 3.0 ||
+        (uvResponse.value < 6.0 && uvResponse.value > 3.0)
+      ) {
+        uvIndexEl.css("background-color", "#fff34a");
+      } else if (
+        uvResponse.value === 6.0 ||
+        (uvResponse.value < 8.0 && uvResponse.value > 6.0)
+      ) {
+        uvIndexEl.css("background-color", "#ff9d00");
+      } else if (
+        uvResponse.value === 8.0 ||
+        (uvResponse.value < 11.0 && uvResponse.value > 8.0)
+      ) {
+        uvIndexEl.css("background-color", "#ff0000");
+      } else {
+        uvIndexEl.css("background-color", "#a30214");
+      }
+      $("#current-weather").append(uvIndexEl);
     });
-
-
   });
   //       -a button will be created with that city and state information and will recall the request for that location
 });
