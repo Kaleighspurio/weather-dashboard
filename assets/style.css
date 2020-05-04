@@ -35,3 +35,7 @@ header {
 .city-button {
     margin: 2px;
 }
+
+.five-day {
+    visibility: hidden;
+}

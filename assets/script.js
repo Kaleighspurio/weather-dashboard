@@ -1,14 +1,14 @@
 var m = moment().format("MMMM Do, YYYY");
-var condensedM = moment().format("l")
+var condensedM = moment().format("l");
 
 // ***** When the search button is clicked*****
 $(".search-button").on("click", function () {
   var cityInput = $("#city-input").val();
   var stateInput = $("#state").val();
   var cityAndState = `${cityInput}, ${stateInput}`;
-//   save the last city and state to local storage
+  //   save the last city and state to local storage
   localStorage.setItem("history", cityAndState);
-//   when the search button is clicked, a new button with the city and state just searched is created and appended below the search button
+  //   when the search button is clicked, a new button with the city and state just searched is created and appended below the search button
   var cityButton = $("<button>", {
     class: "button  is-fullwidth is-light city-button",
     text: cityAndState,
@@ -20,7 +20,7 @@ $(".search-button").on("click", function () {
   var apiKey = "9d66412a01adf0dc225bf9f09e3633d2";
   var currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput},${stateInput},us&appid=${apiKey}`;
   console.log(currentWeatherUrl);
-// ajax request for the current weather with city and state parameters, for searching inside the US
+  // ajax request for the current weather with city and state parameters, for searching inside the US
   $.get(currentWeatherUrl).then(function (response) {
     // This empties the #current-weather div if there is already information presented there
     $("#current-weather").empty();
@@ -81,9 +81,19 @@ $(".search-button").on("click", function () {
       } else {
         uvIndexEl.css("background-color", "#a30214");
       }
+      //   append the uvIndex element to the current weather div
       $("#current-weather").append(uvIndexEl);
     });
+    // this url give a response with a 7 day weather forecast using the lat. and long. received on the previous request
+    var fiveDayURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lattitude}&lon=${longitude}&exclude=current,hourly&appid=${apiKey}`;
+    // makes a request for 7 day forcast
+    $.get(fiveDayURL).then(function(fiveDayData){
+        console.log(fiveDayData);
+        
+    });
+
   });
+
   //       -a button will be created with that city and state information and will recall the request for that location
 });
 
