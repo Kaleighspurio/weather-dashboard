@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Dashboard</title>
-    <link rel="icon" href="assets/images/weathericon.png" type="image/x-icon">
+    <link rel="icon" href="assets/images/weathericon.png" type="image/x-icon" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css"
@@ -103,21 +103,14 @@
       <div class="tile is-vertical is-parent">
         <div class="tile is-child box">
           <p class="title">
-            Current weather for: <span id="current-weather-city"></span> <span id="current-date"></span>
+            Current weather for: <span id="current-weather-city"></span>
+            <span id="current-date"></span>
           </p>
           <div id="current-weather"></div>
         </div>
         <div class="tile is-child box">
-            <p class="title">5 day forecast</p>
-            <div class="tile is-ancestor">
-                <div class="tile is-child box five-day">asdf</div>
-                <div class="tile is-child box five-day">asdf</div>
-                <div class="tile is-child box five-day">asdf</div>
-                <div class="tile is-child box five-day">asdf</div>
-                <div class="tile is-child box five-day">sadf</div>
-            </div>
-          
-
+          <p class="title">5 day forecast</p>
+          <div class="tile is-ancestor five-day-container"></div>
         </div>
       </div>
     </div>

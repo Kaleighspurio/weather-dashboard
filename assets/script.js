@@ -3,6 +3,8 @@ var condensedM = moment().format("l");
 
 // ***** When the search button is clicked*****
 $(".search-button").on("click", function () {
+  // the 5-day forecast divs become visible
+  $(".five-day").css("visibility", "visible");
   var cityInput = $("#city-input").val();
   var stateInput = $("#state").val();
   var cityAndState = `${cityInput}, ${stateInput}`;
@@ -87,11 +89,28 @@ $(".search-button").on("click", function () {
     // this url give a response with a 7 day weather forecast using the lat. and long. received on the previous request
     var fiveDayURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lattitude}&lon=${longitude}&exclude=current,hourly&appid=${apiKey}`;
     // makes a request for 7 day forcast
-    $.get(fiveDayURL).then(function(fiveDayData){
-        console.log(fiveDayData);
-        
+    $.get(fiveDayURL).then(function (fiveDayData) {
+      console.log(fiveDayData);
+      var dailyForecastArray = fiveDayData.daily
+      for (i = 0; i < 5; i++){
+          var dateEl = $("<p>", {
+              class: "date-element"
+          }).text("");
+          var fiveDayIconUrl = "http://openweathermap.org/img/w/" + dailyForecastArray[i].weather[0].icon + ".png";
+          var fiveDayIconEl = $("<img>", {
+              src: fiveDayIconUrl,
+              width: "60px"
+          });
+          var fiveDayTempEl = $("<p>").text("Temp: " + Math.round(dailyForecastArray[i].temp.day * 1.8 - 459.67));
+          var fiveDayHumidityEl = $("<p>").text("Humidity: " + dailyForecastArray[i].humidity + "%")
+          var fiveDayDivEl = $("<div>", {
+              class: "tile is-child box five-day"
+          })
+          $(".five-day-container").append(fiveDayDivEl);
+          fiveDayDivEl.append(dateEl, fiveDayIconEl, fiveDayTempEl, fiveDayHumidityEl);
+          
+      }
     });
-
   });
 
   //       -a button will be created with that city and state information and will recall the request for that location
