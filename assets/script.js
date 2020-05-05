@@ -29,7 +29,7 @@ $(".search-button").on("click", function () {
     console.log(response);
     // create a variable for the source of the icon image that will be appended
     var icon = response.weather[0].icon + ".png";
-    var iconUrl = "http://openweathermap.org/img/w/" + icon;
+    var iconUrl = "https://openweathermap.org/img/w/" + icon;
     // convert the temperature from Kelvin to Fahrenheit
     var currentTemperature = Math.round(response.main.temp * 1.8 - 459.67);
     var currentHumidity = response.main.humidity;
@@ -96,7 +96,7 @@ $(".search-button").on("click", function () {
           var dateEl = $("<p>", {
               class: "date-element"
           }).text(moment.unix(dailyForecastArray[i].dt).format('l'));
-          var fiveDayIconUrl = "http://openweathermap.org/img/w/" + dailyForecastArray[i].weather[0].icon + ".png";
+          var fiveDayIconUrl = "https://openweathermap.org/img/w/" + dailyForecastArray[i].weather[0].icon + ".png";
           var fiveDayIconEl = $("<img>", {
               src: fiveDayIconUrl,
               width: "60px"
