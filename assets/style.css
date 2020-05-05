@@ -1,4 +1,6 @@
-
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 5px;
@@ -36,3 +38,7 @@ header {
     margin: 2px;
 }
 
+.five-day {
+    text-align: center;
+    border: 1px #edf0f0 solid;
+}

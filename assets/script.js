@@ -95,7 +95,7 @@ $(".search-button").on("click", function () {
       for (i = 0; i < 5; i++){
           var dateEl = $("<p>", {
               class: "date-element"
-          }).text("");
+          }).text(moment.unix(dailyForecastArray[i].dt).format('l'));
           var fiveDayIconUrl = "http://openweathermap.org/img/w/" + dailyForecastArray[i].weather[0].icon + ".png";
           var fiveDayIconEl = $("<img>", {
               src: fiveDayIconUrl,
@@ -108,7 +108,6 @@ $(".search-button").on("click", function () {
           })
           $(".five-day-container").append(fiveDayDivEl);
           fiveDayDivEl.append(dateEl, fiveDayIconEl, fiveDayTempEl, fiveDayHumidityEl);
-          
       }
     });
   });
