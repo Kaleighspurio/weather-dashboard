@@ -4,7 +4,7 @@ var condensedM = moment().format("l");
 // ***** When the search button is clicked*****
 $(".search-button").on("click", function () {
   // the 5-day forecast divs become visible
-  $(".five-day").css("visibility", "visible");
+  $(".five-day-container").empty();
   var cityInput = $("#city-input").val();
   var stateInput = $("#state").val();
   var cityAndState = `${cityInput}, ${stateInput}`;
@@ -91,23 +91,37 @@ $(".search-button").on("click", function () {
     // makes a request for 7 day forcast
     $.get(fiveDayURL).then(function (fiveDayData) {
       console.log(fiveDayData);
-      var dailyForecastArray = fiveDayData.daily
-      for (i = 0; i < 5; i++){
-          var dateEl = $("<p>", {
-              class: "date-element"
-          }).text(moment.unix(dailyForecastArray[i].dt).format('l'));
-          var fiveDayIconUrl = "https://openweathermap.org/img/w/" + dailyForecastArray[i].weather[0].icon + ".png";
-          var fiveDayIconEl = $("<img>", {
-              src: fiveDayIconUrl,
-              width: "60px"
-          });
-          var fiveDayTempEl = $("<p>").text("Temp: " + Math.round(dailyForecastArray[i].temp.day * 1.8 - 459.67) + "°");
-          var fiveDayHumidityEl = $("<p>").text("Humidity: " + dailyForecastArray[i].humidity + "%")
-          var fiveDayDivEl = $("<div>", {
-              class: "tile is-child box five-day"
-          })
-          $(".five-day-container").append(fiveDayDivEl);
-          fiveDayDivEl.append(dateEl, fiveDayIconEl, fiveDayTempEl, fiveDayHumidityEl);
+      var dailyForecastArray = fiveDayData.daily;
+      for (i = 0; i < 5; i++) {
+        var dateEl = $("<p>", {
+          class: "date-element",
+        }).text(moment.unix(dailyForecastArray[i].dt).format("l"));
+        var fiveDayIconUrl =
+          "https://openweathermap.org/img/w/" +
+          dailyForecastArray[i].weather[0].icon +
+          ".png";
+        var fiveDayIconEl = $("<img>", {
+          src: fiveDayIconUrl,
+          width: "60px",
+        });
+        var fiveDayTempEl = $("<p>").text(
+          "Temp: " +
+            Math.round(dailyForecastArray[i].temp.day * 1.8 - 459.67) +
+            "°"
+        );
+        var fiveDayHumidityEl = $("<p>").text(
+          "Humidity: " + dailyForecastArray[i].humidity + "%"
+        );
+        var fiveDayDivEl = $("<div>", {
+          class: "tile is-child box five-day",
+        });
+        $(".five-day-container").append(fiveDayDivEl);
+        fiveDayDivEl.append(
+          dateEl,
+          fiveDayIconEl,
+          fiveDayTempEl,
+          fiveDayHumidityEl
+        );
       }
     });
   });
