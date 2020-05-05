@@ -43,7 +43,7 @@ $(".search-button").on("click", function () {
       width: "70px",
     });
     var currentTempEl = $("<p>").text(
-      `Current Temp: ${currentTemperature} degrees F`
+      `Current Temp: ${currentTemperature} ° F`
     );
     var currentHumidityEl = $("<p>").text(`Humidity: ${currentHumidity}%`);
     var currentWindspeedEl = $("<p>").text(`Windspeed: ${currentWind} mph`);
@@ -101,7 +101,7 @@ $(".search-button").on("click", function () {
               src: fiveDayIconUrl,
               width: "60px"
           });
-          var fiveDayTempEl = $("<p>").text("Temp: " + Math.round(dailyForecastArray[i].temp.day * 1.8 - 459.67));
+          var fiveDayTempEl = $("<p>").text("Temp: " + Math.round(dailyForecastArray[i].temp.day * 1.8 - 459.67) + "°");
           var fiveDayHumidityEl = $("<p>").text("Humidity: " + dailyForecastArray[i].humidity + "%")
           var fiveDayDivEl = $("<div>", {
               class: "tile is-child box five-day"
@@ -114,16 +114,3 @@ $(".search-button").on("click", function () {
 
   //       -a button will be created with that city and state information and will recall the request for that location
 });
-
-// ***** To get the current weather*****
-// inside the click event:
-// run an ajax request for the parameters the user inputs
-// create elements dynamically for the city, date, icon, temperature, humidity, and wind in the #current-weather div
-
-//***** To get the UV index *****
-//  inside the current weather ajax request, do another ajax request for the UVIndex
-//      - select the long and lat from the current weather request, store them in variables, and then put those variables into the queryurl for the uv index
-//      - create a new <p> tag for the uv index and append it to the #current-weather div
-
-// ******  To get the 5 day forecast *****
-// inside the click event do another ajax request for the 5 day forcast
