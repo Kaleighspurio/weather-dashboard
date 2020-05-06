@@ -1,15 +1,20 @@
 var m = moment().format("MMMM Do, YYYY");
 var condensedM = moment().format("l");
+var cityInput;
+var stateInput;
 
 // ***** When the search button is clicked*****
-$(".search-button").on("click", function () {
+$(".search-button").on("click", ajaxRequestFunction);
+
+function ajaxRequestFunction() {
   // the 5-day forecast divs become visible
   $(".five-day-container").empty();
-  var cityInput = $("#city-input").val();
-  var stateInput = $("#state").val();
+  cityInput = $("#city-input").val();
+  stateInput = $("#state").val();
   var cityAndState = `${cityInput}, ${stateInput}`;
   //   save the last city and state to local storage
-  localStorage.setItem("history", cityAndState);
+  localStorage.setItem("city-history", cityInput);
+  localStorage.setItem("state-history", stateInput);
   //   when the search button is clicked, a new button with the city and state just searched is created and appended below the search button
   var cityButton = $("<button>", {
     class: "button  is-fullwidth is-light city-button",
@@ -125,6 +130,15 @@ $(".search-button").on("click", function () {
       }
     });
   });
+};
 
-  //       -a button will be created with that city and state information and will recall the request for that location
+
+$(document).on("click", ".city-button", function(){
+    var cityInput = $(this).attr("data-city");
+    var stateInput = $(this).attr("data-state");
+    $("#city-input").val(cityInput);
+    $("#state").val(stateInput);
+    console.log(cityInput);
+    console.log(stateInput);
+    ajaxRequestFunction();
 });
