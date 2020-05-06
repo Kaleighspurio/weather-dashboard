@@ -2,6 +2,18 @@ var m = moment().format("MMMM Do, YYYY");
 var condensedM = moment().format("l");
 var cityInput;
 var stateInput;
+var cityAndState;
+
+// Take the last searched city from local storage and create a button with that city containing the appropriate data attributes
+var city = localStorage.getItem("city-history");
+var state = localStorage.getItem("state-history");
+var savedCity = $("<button>", {
+    class: "button  is-fullwidth is-light city-button",
+    "data-city": city,
+    "data-state": state,
+    text: city + ", " + state
+});
+$("#city-buttons").append(savedCity);
 
 // ***** When the search button is clicked*****
 $(".search-button").on("click", ajaxRequestFunction);
@@ -11,7 +23,7 @@ function ajaxRequestFunction() {
   $(".five-day-container").empty();
   cityInput = $("#city-input").val();
   stateInput = $("#state").val();
-  var cityAndState = `${cityInput}, ${stateInput}`;
+  cityAndState = `${cityInput}, ${stateInput}`;
   //   save the last city and state to local storage
   localStorage.setItem("city-history", cityInput);
   localStorage.setItem("state-history", stateInput);
@@ -19,8 +31,8 @@ function ajaxRequestFunction() {
   var cityButton = $("<button>", {
     class: "button  is-fullwidth is-light city-button",
     text: cityAndState,
-    "data-city": cityInput,
-    "data-state": stateInput,
+    "data-city": localStorage.getItem("city-history"),
+    "data-state": localStorage.getItem("state-history")
   });
   $("#city-buttons").prepend(cityButton);
 
@@ -97,6 +109,7 @@ function ajaxRequestFunction() {
     $.get(fiveDayURL).then(function (fiveDayData) {
       console.log(fiveDayData);
       var dailyForecastArray = fiveDayData.daily;
+    //   for the first 5 days in the forecast, create <p> and <img> elements to display the icons, dates, temps, and humidity for each day and append it to the five-day-container div
       for (i = 0; i < 5; i++) {
         var dateEl = $("<p>", {
           class: "date-element",
@@ -132,13 +145,11 @@ function ajaxRequestFunction() {
   });
 };
 
-
+// When the user clicks one of the cities they have searched before, the data attribute of the target is grabbed and used to rerun the ajax request
 $(document).on("click", ".city-button", function(){
     var cityInput = $(this).attr("data-city");
     var stateInput = $(this).attr("data-state");
     $("#city-input").val(cityInput);
     $("#state").val(stateInput);
-    console.log(cityInput);
-    console.log(stateInput);
     ajaxRequestFunction();
 });

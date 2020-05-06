@@ -15,6 +15,7 @@ header {
     font-size: 45px;
     width: 50%;
     margin: 10px auto;
+    padding: 20px;
     text-align: center;
     border-bottom: 2px grey solid;
 }
@@ -28,6 +29,7 @@ header {
     margin: 0 auto;
     text-align: center;
     background-color: #edf0f0;
+    min-height: 200px;
 }
 
 .box {
@@ -36,6 +38,11 @@ header {
 
 .city-button {
     margin: 2px;
+    max-width: 280px;
+}
+
+.five-day-container {
+    min-height: 230px;
 }
 
 .five-day {
