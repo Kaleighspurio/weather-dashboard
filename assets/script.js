@@ -5,15 +5,19 @@ var stateInput;
 var cityAndState;
 
 // Take the last searched city from local storage and create a button with that city containing the appropriate data attributes and appends them to the #city-buttons div
+
 var localStoreCity = localStorage.getItem("city-history");
 var localStoreState = localStorage.getItem("state-history");
-var savedCity = $("<button>", {
-  class: "button  is-fullwidth is-light city-button",
-  "data-city": localStoreCity,
-  "data-state": localStoreState,
-  text: localStoreCity + ", " + localStoreState,
-});
-$("#city-buttons").append(savedCity);
+if (localStoreCity != null && localStoreState != null){
+    var savedCity = $("<button>", {
+        class: "button  is-fullwidth is-light city-button",
+        "data-city": localStoreCity,
+        "data-state": localStoreState,
+        text: localStoreCity + ", " + localStoreState,
+      });
+      $("#city-buttons").append(savedCity);
+}
+
 
 // When the search button is clicked run the ajax request function
 $(".search-button").on("click", function () {
