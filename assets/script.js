@@ -4,45 +4,55 @@ var cityInput;
 var stateInput;
 var cityAndState;
 
-// Take the last searched city from local storage and create a button with that city containing the appropriate data attributes
+// Take the last searched city from local storage and create a button with that city containing the appropriate data attributes and appends them to the #city-buttons div
 var city = localStorage.getItem("city-history");
 var state = localStorage.getItem("state-history");
 var savedCity = $("<button>", {
-    class: "button  is-fullwidth is-light city-button",
-    "data-city": city,
-    "data-state": state,
-    text: city + ", " + state
+  class: "button  is-fullwidth is-light city-button",
+  "data-city": city,
+  "data-state": state,
+  text: city + ", " + state,
 });
 $("#city-buttons").append(savedCity);
 
-// ***** When the search button is clicked*****
-$(".search-button").on("click", ajaxRequestFunction);
+// When the search button is clicked run the ajax request function
+$(".search-button").on("click", function () {
+  cityInput = $("#city-input").val();
+  if (cityInput === "") {
+    alert("Please enter a city");
+  } else {
+    ajaxRequestFunction();
+  }
+});
 
+//  ********  Ajax request function *****
 function ajaxRequestFunction() {
   // the 5-day forecast divs become visible
   $(".five-day-container").empty();
+  // This empties the #current-weather div if there is already information presented there
+  $("#current-weather").empty();
+
+  //   Take the input values from the city and state input areas and store them in local storage
   cityInput = $("#city-input").val();
   stateInput = $("#state").val();
   cityAndState = `${cityInput}, ${stateInput}`;
-  //   save the last city and state to local storage
   localStorage.setItem("city-history", cityInput);
   localStorage.setItem("state-history", stateInput);
+
   //   when the search button is clicked, a new button with the city and state just searched is created and appended below the search button
   var cityButton = $("<button>", {
     class: "button  is-fullwidth is-light city-button",
     text: cityAndState,
     "data-city": localStorage.getItem("city-history"),
-    "data-state": localStorage.getItem("state-history")
+    "data-state": localStorage.getItem("state-history"),
   });
   $("#city-buttons").prepend(cityButton);
 
   var apiKey = "9d66412a01adf0dc225bf9f09e3633d2";
   var currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput},${stateInput},us&appid=${apiKey}`;
-  console.log(currentWeatherUrl);
-  // ajax request for the current weather with city and state parameters, for searching inside the US
+
+  // ***** ajax request for the current weather with city and state parameters, for searching inside the US
   $.get(currentWeatherUrl).then(function (response) {
-    // This empties the #current-weather div if there is already information presented there
-    $("#current-weather").empty();
     console.log(response);
     // create a variable for the source of the icon image that will be appended
     var icon = response.weather[0].icon + ".png";
@@ -64,18 +74,22 @@ function ajaxRequestFunction() {
     );
     var currentHumidityEl = $("<p>").text(`Humidity: ${currentHumidity}%`);
     var currentWindspeedEl = $("<p>").text(`Windspeed: ${currentWind} mph`);
-    // append the elements just created to the #current-weather div
+    // append the icon, temp, humidity, and wind elements to the #current-weather div
     $("#current-weather").append(
       currentIconEl,
       currentTempEl,
       currentHumidityEl,
       currentWindspeedEl
     );
+
+    // Use the lattitude and longitude from the previous ajax response in a request for the uv index
     var longitude = response.coord.lon;
     var lattitude = response.coord.lat;
     var uvIndexUrl = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lattitude}&lon=${longitude}`;
+    //  Ajax request for the UV-index
     $.get(uvIndexUrl).then(function (uvResponse) {
       console.log(uvResponse);
+      //   create a <p> to display the UV-index
       var uvIndexEl = $("<p>", {
         class: "uv-index",
       }).text(`UV Index: ${uvResponse.value}`);
@@ -103,13 +117,14 @@ function ajaxRequestFunction() {
       //   append the uvIndex element to the current weather div
       $("#current-weather").append(uvIndexEl);
     });
+
     // this url give a response with a 7 day weather forecast using the lat. and long. received on the previous request
     var fiveDayURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lattitude}&lon=${longitude}&exclude=current,hourly&appid=${apiKey}`;
-    // makes a request for 7 day forcast
+    // make a request for 7 day forcast
     $.get(fiveDayURL).then(function (fiveDayData) {
       console.log(fiveDayData);
       var dailyForecastArray = fiveDayData.daily;
-    //   for the first 5 days in the forecast, create <p> and <img> elements to display the icons, dates, temps, and humidity for each day and append it to the five-day-container div
+      //   for the first 5 days in the forecast, create <p> and <img> elements to display the icons, dates, temps, and humidity for each day and append it to the five-day-container div
       for (i = 0; i < 5; i++) {
         var dateEl = $("<p>", {
           class: "date-element",
@@ -143,13 +158,13 @@ function ajaxRequestFunction() {
       }
     });
   });
-};
+}
 
 // When the user clicks one of the cities they have searched before, the data attribute of the target is grabbed and used to rerun the ajax request
-$(document).on("click", ".city-button", function(){
-    var cityInput = $(this).attr("data-city");
-    var stateInput = $(this).attr("data-state");
-    $("#city-input").val(cityInput);
-    $("#state").val(stateInput);
-    ajaxRequestFunction();
+$(document).on("click", ".city-button", function () {
+  var cityInput = $(this).attr("data-city");
+  var stateInput = $(this).attr("data-state");
+  $("#city-input").val(cityInput);
+  $("#state").val(stateInput);
+  ajaxRequestFunction();
 });
