@@ -20,6 +20,10 @@ header {
     border-bottom: 2px grey solid;
 }
 
+.input-error-message {
+    color: red;
+}
+
 #current-weather-city {
     color: cornflowerblue;
 }

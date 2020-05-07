@@ -5,21 +5,28 @@ var stateInput;
 var cityAndState;
 
 // Take the last searched city from local storage and create a button with that city containing the appropriate data attributes and appends them to the #city-buttons div
-var city = localStorage.getItem("city-history");
-var state = localStorage.getItem("state-history");
+var localStoreCity = localStorage.getItem("city-history");
+var localStoreState = localStorage.getItem("state-history");
 var savedCity = $("<button>", {
   class: "button  is-fullwidth is-light city-button",
-  "data-city": city,
-  "data-state": state,
-  text: city + ", " + state,
+  "data-city": localStoreCity,
+  "data-state": localStoreState,
+  text: localStoreCity + ", " + localStoreState,
 });
 $("#city-buttons").append(savedCity);
 
 // When the search button is clicked run the ajax request function
 $(".search-button").on("click", function () {
+  // if an error message is already displayed, it will disappear when the search button is clicked
+  $(".input-error-message").empty();
   cityInput = $("#city-input").val();
   if (cityInput === "") {
-    alert("Please enter a city");
+    //   If nothing is typed in the input, a <p> is created with a message and appended above the input
+    var typeCityMessage = $("<p>", {
+      class: "input-error-message",
+      text: "Oops, you forgot something. Please type a city",
+    });
+    $(".city-search").prepend(typeCityMessage);
   } else {
     ajaxRequestFunction();
   }
