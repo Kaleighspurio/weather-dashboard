@@ -7,7 +7,7 @@ body {
 }
 
 header {
-    background-color: #edf0f0;
+    background-color: #8acfcf;
     border-radius: 10px;
 }
 
@@ -22,6 +22,11 @@ header {
 
 .input-error-message {
     color: red;
+}
+
+.search-button {
+    background-color: #8acfcf;
+    border: #549696 solid 1px;
 }
 
 #current-weather-city {
@@ -41,7 +46,7 @@ header {
 }
 
 .city-button {
-    margin: 4px;
+    margin: 6px;
     max-width: 280px;
 }
 
