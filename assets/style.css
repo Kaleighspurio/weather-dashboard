@@ -58,3 +58,14 @@ header {
     text-align: center;
     border: 1px #edf0f0 solid;
 }
+
+.foot {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 13px;
+    text-align: center;
+    padding: 15px;
+    background-color: #8acfcf;
+}
