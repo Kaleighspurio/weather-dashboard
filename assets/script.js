@@ -255,9 +255,9 @@ function ajaxRequestFunctionNoNewButton() {
         uvResponse.value === 8.0 ||
         (uvResponse.value < 11.0 && uvResponse.value > 8.0)
       ) {
-        uvIndexEl.css("background-color", "#ff0000");
+        uvIndexEl.css({"background-color": "#ff0000", "color": "white"});
       } else {
-        uvIndexEl.css("background-color", "#a30214");
+        uvIndexEl.css({"background-color": "#a30214", "color": "white"});
       }
       //   append the uvIndex element to the current weather div
       $("#current-weather").append(uvIndexEl);
