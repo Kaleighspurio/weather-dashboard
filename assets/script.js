@@ -4,7 +4,7 @@ var cityInput;
 var stateInput;
 var cityAndState;
 
-// Take the last searched city from local storage and create a button with that city containing the appropriate data attributes and appends them to the #city-buttons div
+// Take the last searched city from local storage and create a button with that city containing the appropriate data attributes and appends them to the #city-buttons div. Also run an ajax request so the last searched city's weather is displayed.
 var localStoreCity = localStorage.getItem("city-history");
 var localStoreState = localStorage.getItem("state-history");
 if (localStoreCity != null && localStoreState != null){
@@ -16,6 +16,13 @@ if (localStoreCity != null && localStoreState != null){
       });
       $("#city-buttons").append(savedCity);
 }
+cityInput = localStoreCity;
+stateInput = localStoreState;
+$("#city-input").val(localStoreCity);
+$("#state").val(localStoreState);
+ajaxRequestFunctionNoNewButton();
+
+
 
 // When the search button is clicked run the ajax request function
 $(".search-button").on("click", function () {
