@@ -20,7 +20,10 @@ cityInput = localStoreCity;
 stateInput = localStoreState;
 $("#city-input").val(localStoreCity);
 $("#state").val(localStoreState);
-ajaxRequestFunctionNoNewButton();
+if (localStoreCity && localStoreState){
+  ajaxRequestFunctionNoNewButton();
+}
+
 
 // When the search button is clicked run the ajax request function
 $(".search-button").on("click", function () {
