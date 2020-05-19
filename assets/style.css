@@ -12,7 +12,7 @@ header {
 }
 
 #heading-title {
-    font-size: 45px;
+    font-size: 40px;
     width: 50%;
     margin: 10px auto;
     padding: 20px;
@@ -60,12 +60,10 @@ header {
 }
 
 .foot {
-    position: fixed;
-    left: 0;
-    bottom: 0;
     width: 100%;
     font-size: 13px;
     text-align: center;
     padding: 15px;
     background-color: #8acfcf;
+    height: 60px;
 }
